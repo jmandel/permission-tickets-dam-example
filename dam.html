@@ -1,0 +1,1434 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SMART Permission Tickets DAM Artifacts</title>
+  <style>
+    :root {
+      --ink: #16202a;
+      --muted: #5f6b76;
+      --line: #d9e0e7;
+      --paper: #ffffff;
+      --canvas: #f6f8fa;
+      --panel: #fbfcfd;
+      --teal: #0f766e;
+      --teal-soft: #e5f3f1;
+      --blue: #1d4ed8;
+      --blue-soft: #e8efff;
+      --amber: #b45309;
+      --amber-soft: #fff4dd;
+      --rose: #be123c;
+      --rose-soft: #ffe8ee;
+      --green: #15803d;
+      --green-soft: #e8f6ed;
+      --shadow: 0 18px 50px rgba(22, 32, 42, 0.08);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--canvas);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      line-height: 1.55;
+      background:
+        linear-gradient(180deg, rgba(15, 118, 110, 0.08), rgba(246, 248, 250, 0) 360px),
+        var(--canvas);
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      padding: 28px 22px;
+    }
+
+    aside h1 {
+      font-size: 18px;
+      line-height: 1.25;
+      margin: 0 0 8px;
+      letter-spacing: 0;
+    }
+
+    aside p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    nav a {
+      display: block;
+      border-radius: 7px;
+      padding: 8px 10px;
+      color: #2f3a45;
+      font-size: 13px;
+    }
+
+    nav a:hover {
+      background: var(--teal-soft);
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    main {
+      min-width: 0;
+      padding: 42px 52px 80px;
+    }
+
+    .hero {
+      max-width: 1180px;
+      padding: 36px;
+      margin: 0 auto 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h2, h3, h4 {
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 30px;
+      line-height: 1.18;
+      margin: 0 0 14px;
+    }
+
+    .hero h2 {
+      font-size: clamp(30px, 4vw, 52px);
+      max-width: 900px;
+    }
+
+    h3 {
+      font-size: 22px;
+      margin: 0 0 12px;
+    }
+
+    h4 {
+      font-size: 15px;
+      margin: 0 0 8px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .lede {
+      max-width: 920px;
+      color: #334155;
+      font-size: 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: #fff;
+      color: #40505f;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    section {
+      max-width: 1180px;
+      margin: 0 auto 28px;
+      padding: 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 26px rgba(22, 32, 42, 0.045);
+      scroll-margin-top: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 22px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      max-width: 680px;
+      margin: 2px 0 0;
+    }
+
+    .tag {
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .artifact-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 18px;
+    }
+
+    .artifact-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .artifact-card p, .artifact-card li {
+      color: #465563;
+      font-size: 14px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      vertical-align: top;
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+    }
+
+    th {
+      background: #edf2f7;
+      color: #283440;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fbfcfe;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius);
+    }
+
+    .diagram {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .diagram-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .diagram-title h4 {
+      margin: 0;
+    }
+
+    .diagram-title span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .mermaid {
+      min-width: 760px;
+      text-align: center;
+    }
+
+    .note {
+      border-left: 4px solid var(--teal);
+      background: var(--teal-soft);
+      padding: 14px 16px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #24423f;
+    }
+
+    .warning {
+      border-left-color: var(--amber);
+      background: var(--amber-soft);
+      color: #5f3b05;
+    }
+
+    .danger {
+      border-left-color: var(--rose);
+      background: var(--rose-soft);
+      color: #6b1027;
+    }
+
+    .compact-list {
+      columns: 2;
+      column-gap: 34px;
+    }
+
+    .req-id {
+      display: inline-block;
+      min-width: 56px;
+      color: var(--teal);
+      font-weight: 800;
+    }
+
+    .footer {
+      max-width: 1180px;
+      margin: 32px auto 0;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .shell {
+        display: block;
+      }
+
+      aside {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      main {
+        padding: 24px 16px 48px;
+      }
+
+      .hero, section {
+        padding: 22px;
+      }
+
+      .grid.two, .grid.three {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .tag {
+        display: inline-block;
+        margin-top: 10px;
+      }
+
+      .compact-list {
+        columns: 1;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .shell {
+        display: block;
+      }
+
+      aside {
+        display: none;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      .hero, section {
+        box-shadow: none;
+        break-inside: avoid;
+        max-width: none;
+      }
+
+      .diagram {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <h1>SMART Permission Tickets DAM</h1>
+      <p>Formal artifact set generated from stakeholder interviews and the narrative DAM.</p>
+      <nav aria-label="Document navigation">
+        <a href="#overview">1. Overview</a>
+        <a href="#mindmap">2. Mindmap</a>
+        <a href="#scope">3. Scope</a>
+        <a href="#actors">4. Actors</a>
+        <a href="#context">5. Context</a>
+        <a href="#use-cases">6. Use Cases</a>
+        <a href="#current-state">7. Current State</a>
+        <a href="#future-state">8. Future State</a>
+        <a href="#sequences">9. Sequences</a>
+        <a href="#conceptual-model">10. Conceptual Model</a>
+        <a href="#lifecycle">11. Lifecycle</a>
+        <a href="#requirements">12. Requirements</a>
+        <a href="#traceability">13. Traceability</a>
+        <a href="#risk">14. Risks</a>
+        <a href="#decisions">15. Decisions</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="hero" id="overview">
+        <p class="eyebrow">Domain Analysis Model Artifacts</p>
+        <h2>SMART Permission Tickets</h2>
+        <p class="lede">
+          A formal DAM artifact set for portable, scoped, auditable authorization
+          across healthcare data access workflows. This artifact set converts the
+          narrative DAM into reviewable models that can seed later IG, UML,
+          sequence, requirements, and conformance work.
+        </p>
+        <div class="meta">
+          <span class="pill">Source: 31 stakeholder interviews</span>
+          <span class="pill">Basis: dam.md narrative DAM</span>
+          <span class="pill">Status: working analysis artifact</span>
+          <span class="pill">Generated: 2026-05-19</span>
+        </div>
+      </header>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <h3>Domain Premise</h3>
+            <p>The domain need is not merely a new token. It is a portable authorization mechanism that can be trusted, scoped, locally constrained, enforced, refreshed, revoked, and audited across multiple healthcare exchange contexts.</p>
+          </div>
+          <span class="tag">Narrative Anchor</span>
+        </div>
+        <div class="grid three">
+          <div class="artifact-card">
+            <strong>Problem</strong>
+            <p>Authorization is fragmented across portals, paper forms, local accounts, network agreements, app approvals, fax workflows, and local policy engines.</p>
+          </div>
+          <div class="artifact-card">
+            <strong>Boundary</strong>
+            <p>A Permission Ticket sets an authorization ceiling. The data holder remains responsible for final release decisions and local filtering.</p>
+          </div>
+          <div class="artifact-card">
+            <strong>v1 Posture</strong>
+            <p>Start with enforceable constraints: requester, recipient, subject, purpose, broad data category, time, case, claim, referral, condition, and organization.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="mindmap">
+        <div class="section-head">
+          <div>
+            <h3>Stakeholder and Concern Mindmap</h3>
+            <p>This map shows the stakeholder topology and the repeated concerns that drive the domain requirements.</p>
+          </div>
+          <span class="tag">Mermaid Mindmap</span>
+        </div>
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>DAM Mindmap</h4>
+            <span>Stakeholders, needs, constraints, and adoption forces</span>
+          </div>
+          <pre class="mermaid">
+mindmap
+  root((SMART Permission Tickets DAM))
+    Patients
+      Fewer portal logins
+      Durable access refresh
+      Clear consent screens
+      Access logs
+      Sensitive category control
+    Caregivers
+      Portable authority proof
+      Plain-language staff display
+      Revocation and updates
+      Full or scoped representation
+    Patient Apps
+      Machine-readable discovery
+      Partial adoption fallback
+      Broad issuer acceptance
+      Tight conformance
+    EHR Vendors
+      Additive token validation
+      API-layer enforcement
+      Local policy remains final
+      Client binding
+      Avoid demographic matching risk
+    Provider Organizations
+      Pre-approve issuers
+      High-level policy overlays
+      Local sensitive data filtering
+      HIM and security review
+    Payers and CMS
+      Claim-specific evidence
+      Prior authorization support
+      Common data categories
+      Avoid vendor toll roads
+    Public Health and Registries
+      Case-specific follow-up
+      Condition profiles
+      Intermediary support
+      State law alignment
+    Networks and Intermediaries
+      On-behalf-of context
+      Trust framework bridge
+      Purpose and role conveyance
+      Three-party flows
+    Consent Services
+      Computable consent output
+      Form variation
+      Enforceable segmentation
+    Trust and Identity
+      Issuer governance
+      Organization identity
+      IAL2 where needed
+      DNS or registry anchored keys
+      Agentic identity future
+          </pre>
+        </div>
+      </section>
+
+      <section id="scope">
+        <div class="section-head">
+          <div>
+            <h3>Scope Model</h3>
+            <p>The DAM scope separates the portable authorization mechanism from adjacent legal, consent, segmentation, and workflow integration workstreams.</p>
+          </div>
+          <span class="tag">Scope Artifact</span>
+        </div>
+        <div class="grid two">
+          <div class="artifact-card">
+            <strong>In Scope</strong>
+            <ul>
+              <li>Portable authorization artifacts for healthcare data access</li>
+              <li>Patient, caregiver, payer, public health, registry, referral, backend, and network-mediated access</li>
+              <li>Issuer trust, requester identity, organization identity, client binding, subject resolution</li>
+              <li>Scope, duration, revocation, auditability, and discovery</li>
+              <li>Interaction with local policy, consent, DS4P-style segmentation, and jurisdictional rules at a conceptual level</li>
+            </ul>
+          </div>
+          <div class="artifact-card">
+            <strong>Out of Scope</strong>
+            <ul>
+              <li>Final JWT schema or SMART grant specification</li>
+              <li>Universal patient identifier or single identity vendor</li>
+              <li>Complete consent form standard or clinical segmentation standard</li>
+              <li>Replacement for DUAs, BAAs, IRBs, laws, or network agreements</li>
+              <li>General write-back model for all EHR data</li>
+              <li>Full governance model for autonomous AI agents</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note">
+          <strong>Boundary principle:</strong> Permission Tickets should standardize the portable authorization context. They should not own every downstream clinical scoping taxonomy, consent form, segmentation rule, or data-use policy.
+        </div>
+      </section>
+
+      <section id="actors">
+        <div class="section-head">
+          <div>
+            <h3>Actor and Responsibility Model</h3>
+            <p>The actor model distinguishes who asserts permission, who requests data, who carries context, who enforces policy, and who is accountable for audit.</p>
+          </div>
+          <span class="tag">Actor Matrix</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Actor</th>
+                <th>Domain Responsibility</th>
+                <th>Key Requirements</th>
+                <th>Primary Risks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Authorizing Party</td>
+                <td>Provides the basis for access: patient preference, caregiver authority, public health law, payer workflow, registry mandate, or provider action.</td>
+                <td>Authority basis must be explicit and auditable.</td>
+                <td>Ambiguous consent, expired authority, conflicting rules.</td>
+              </tr>
+              <tr>
+                <td>Issuer</td>
+                <td>Mints and signs the Permission Ticket.</td>
+                <td>Trusted for use context; keys discoverable; revocation supported; category membership governed.</td>
+                <td>Misissued tickets, over-broad scope, conflict of interest.</td>
+              </tr>
+              <tr>
+                <td>Requester</td>
+                <td>Presents the ticket to obtain data or a down-scoped access token.</td>
+                <td>Must authenticate as intended client; must use ticket only within constraints.</td>
+                <td>Replay, use by unintended client, downstream misuse.</td>
+              </tr>
+              <tr>
+                <td>Intermediary</td>
+                <td>Carries, validates, transforms, or issues authorization context in network flows.</td>
+                <td>Must preserve requester identity, purpose, role, organization, and scope.</td>
+                <td>Target sees only intermediary; context is lost or altered.</td>
+              </tr>
+              <tr>
+                <td>Data Holder</td>
+                <td>Validates ticket, applies local policy, resolves subject, issues or denies access.</td>
+                <td>Can down-scope; local sensitive data filters remain authoritative.</td>
+                <td>Over-release, wrong patient match, inconsistent API enforcement.</td>
+              </tr>
+              <tr>
+                <td>Subject</td>
+                <td>The patient, member, or person whose data is requested.</td>
+                <td>Subject resolution must be safe and auditable.</td>
+                <td>Demographic mismatch, identity ambiguity, proxy conflict.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="context">
+        <div class="section-head">
+          <div>
+            <h3>System Context</h3>
+            <p>The context diagram positions the ticket as an authorization-context carrier between trust governance, requesters, intermediaries, data holders, and audit consumers.</p>
+          </div>
+          <span class="tag">Mermaid Flowchart</span>
+        </div>
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Permission Ticket Context Model</h4>
+            <span>High-level domain context</span>
+          </div>
+          <pre class="mermaid">
+flowchart LR
+  AP[Authorizing Party<br/>patient, caregiver, law, workflow] -->|authority basis| ISS[Trusted Issuer]
+  TF[Trust Framework<br/>registry, agreements, accreditation] -->|trust rules| ISS
+  TF -->|accepted issuers and categories| DH[Data Holder]
+  ISS -->|signed scoped Permission Ticket| REQ[Requester<br/>app, payer, PHA, registry, CBO]
+  REQ -->|ticket + client auth| INT[Intermediary or Gateway]
+  REQ -->|direct ticket + client auth| DH
+  INT -->|on-behalf-of request<br/>ticket preserved or issued| DH
+  DH -->|validate issuer, subject, scope,<br/>client binding, revocation| AS[Authorization Server]
+  AS -->|apply local policy and sensitivity filters| PE[Policy Enforcement]
+  PE -->|down-scoped token or denial| REQ
+  REQ -->|FHIR query or operation| RS[FHIR Resource Server]
+  RS -->|filtered data or partial response| REQ
+  AS --> AUD[Audit and Transparency]
+  RS --> AUD
+  AUD --> PAT[Patient / Caregiver View]
+  AUD --> GOV[Governance and Compliance]
+
+  classDef actor fill:#e8efff,stroke:#1d4ed8,color:#16202a
+  classDef trust fill:#e5f3f1,stroke:#0f766e,color:#16202a
+  classDef holder fill:#fff4dd,stroke:#b45309,color:#16202a
+  classDef audit fill:#ffe8ee,stroke:#be123c,color:#16202a
+  class AP,REQ,PAT actor
+  class ISS,TF,INT trust
+  class DH,AS,PE,RS holder
+  class AUD,GOV audit
+          </pre>
+        </div>
+      </section>
+
+      <section id="use-cases">
+        <div class="section-head">
+          <div>
+            <h3>Use Case Catalog</h3>
+            <p>The catalog gives each major use case a stable identifier for later storyboard, sequence, requirements, and conformance traceability.</p>
+          </div>
+          <span class="tag">Use Case Artifact</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Use Case</th>
+                <th>Primary Actors</th>
+                <th>Ticket Value</th>
+                <th>Critical Constraints</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>UC-01</td>
+                <td>Patient longitudinal app access</td>
+                <td>Patient, app, issuer, data holder</td>
+                <td>Reduce repeated portal login and enable refreshable access.</td>
+                <td>Issuer acceptance, discovery, revocation, SMART scopes, data categories.</td>
+              </tr>
+              <tr>
+                <td>UC-02</td>
+                <td>Caregiver or authorized representative access</td>
+                <td>Caregiver, patient, issuer, provider</td>
+                <td>Portable proof of authority across providers.</td>
+                <td>Legal basis, scope, revocation, staff-readable explanation.</td>
+              </tr>
+              <tr>
+                <td>UC-03</td>
+                <td>Payer claim or prior authorization evidence</td>
+                <td>Payer, provider, issuer, data holder</td>
+                <td>Claim-specific clinical evidence without broad standing access.</td>
+                <td>Self-pay filters, sensitive data, organization identity, claim context.</td>
+              </tr>
+              <tr>
+                <td>UC-04</td>
+                <td>Public health case follow-up</td>
+                <td>Public health agency, provider, HIE, issuer</td>
+                <td>Condition-specific follow-up data after an initial report.</td>
+                <td>Public health authority, condition profile, renewal, non-NPI identities.</td>
+              </tr>
+              <tr>
+                <td>UC-05</td>
+                <td>Registry case completion</td>
+                <td>Registry, facility, intermediary, issuer</td>
+                <td>Specific treatment, staging, and outcome data for case completion.</td>
+                <td>State reporting law, DUA, intermediary support, limited registry FHIR readiness.</td>
+              </tr>
+              <tr>
+                <td>UC-06</td>
+                <td>Care coordination and referral access</td>
+                <td>Provider, CBO, downstream provider, patient</td>
+                <td>Referral-specific read access and possible status update.</td>
+                <td>Clinical oversight, write-back maturity, care-journey scope.</td>
+              </tr>
+              <tr>
+                <td>UC-07</td>
+                <td>Intermediary or network-mediated exchange</td>
+                <td>Requester, HIN/HIE/QHIN, target data holder</td>
+                <td>Standardized on-behalf-of authorization context.</td>
+                <td>Three-party semantics, preserved identity, FAST/UDAP alignment.</td>
+              </tr>
+              <tr>
+                <td>UC-08</td>
+                <td>CDS Hooks on-demand data access</td>
+                <td>EHR, CDS service, data holder</td>
+                <td>Service exchanges ticket only when data is actually needed.</td>
+                <td>Hook context, short-lived token, client binding.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="current-state">
+        <div class="section-head">
+          <div>
+            <h3>Current-State Workflow Model</h3>
+            <p>The current state is fragmented by repeated local ceremonies, manual review, inconsistent permissions, and weak transaction-level context.</p>
+          </div>
+          <span class="tag">Mermaid Flowchart</span>
+        </div>
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Current Authorization Friction</h4>
+            <span>Common failure points across workflows</span>
+          </div>
+          <pre class="mermaid">
+flowchart TB
+  START([Need data access]) --> TYPE{Use context}
+  TYPE --> PATIENT[Patient app]
+  TYPE --> CAREGIVER[Caregiver access]
+  TYPE --> PAYER[Payer evidence request]
+  TYPE --> PH[Public health or registry follow-up]
+  TYPE --> B2B[Backend or network exchange]
+
+  PATIENT --> D1[Find institution]
+  D1 --> D2[Portal login and MFA]
+  D2 --> D3[Consent screen]
+  D3 --> D4[Refresh token maintenance]
+  D1 --> F1[Drop-off: not found or API off]
+  D2 --> F2[Drop-off: no credentials]
+  D4 --> F3[Drop-off: disconnected]
+
+  CAREGIVER --> C1[Fax ID, POA, forms]
+  C1 --> C2[Staff interprets authority]
+  C2 --> C3[Documents not retained]
+  C2 --> F4[Denied despite legal authority]
+
+  PAYER --> P1[Portal or RFI]
+  P1 --> P2[PDFs, images, scanned docs]
+  P2 --> P3[Manual review]
+  P3 --> F5[Slow adjudication or appeal loop]
+
+  PH --> H1[Initial ELR/eICR/feed]
+  H1 --> H2[Phone, email, fax, letters]
+  H2 --> H3[Variable response and missing data]
+
+  B2B --> N1[Onboarding agreements]
+  N1 --> N2[Purpose and scope configured broadly]
+  N2 --> N3[Target interprets local policy]
+  N3 --> F6[Over- or under-provisioning risk]
+
+  classDef fail fill:#ffe8ee,stroke:#be123c,color:#16202a
+  classDef manual fill:#fff4dd,stroke:#b45309,color:#16202a
+  class F1,F2,F3,F4,F5,F6 fail
+  class C1,C2,C3,P1,P2,P3,H2,H3,N1,N2,N3 manual
+          </pre>
+        </div>
+      </section>
+
+      <section id="future-state">
+        <div class="section-head">
+          <div>
+            <h3>Future-State Workflow Model</h3>
+            <p>The target state uses a signed artifact to carry authorization context while preserving local policy and enforcement responsibility.</p>
+          </div>
+          <span class="tag">Mermaid Flowchart</span>
+        </div>
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Permission Ticket Evaluation Pipeline</h4>
+            <span>Ticket as authorization ceiling, not release guarantee</span>
+          </div>
+          <pre class="mermaid">
+flowchart LR
+  A[Establish authority basis] --> B[Issuer creates signed ticket]
+  B --> C[Requester presents ticket + client authentication]
+  C --> D{Trusted issuer?}
+  D -- no --> X1[Reject and audit]
+  D -- yes --> E{Client binding valid?}
+  E -- no --> X2[Reject and audit]
+  E -- yes --> F{Subject safely resolved?}
+  F -- no --> X3[Resolve separately or deny]
+  F -- yes --> G[Read ticket scope and purpose]
+  G --> H[Intersect with local policy]
+  H --> I{Sensitive data or legal restriction?}
+  I -- yes --> J[Filter, redact, or deny]
+  I -- no --> K[Issue down-scoped access token]
+  J --> L{Any permitted data remains?}
+  L -- no --> X4[Deny with reason and audit]
+  L -- yes --> K
+  K --> M[Requester accesses FHIR API]
+  M --> N[Filtered response]
+  N --> O[Audit access and expose transparency]
+
+  classDef reject fill:#ffe8ee,stroke:#be123c,color:#16202a
+  classDef decision fill:#e8efff,stroke:#1d4ed8,color:#16202a
+  classDef success fill:#e8f6ed,stroke:#15803d,color:#16202a
+  class D,E,F,I,L decision
+  class X1,X2,X3,X4 reject
+  class K,M,N,O success
+          </pre>
+        </div>
+      </section>
+
+      <section id="sequences">
+        <div class="section-head">
+          <div>
+            <h3>Sequence Models</h3>
+            <p>These sequence diagrams formalize representative flows. They are analysis artifacts, not final protocol definitions.</p>
+          </div>
+          <span class="tag">Mermaid Sequences</span>
+        </div>
+
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Patient App Access</h4>
+            <span>UC-01</span>
+          </div>
+          <pre class="mermaid">
+sequenceDiagram
+  autonumber
+  actor Patient
+  participant App as Patient App
+  participant Issuer as Trusted Issuer
+  participant DH as Data Holder Authorization Server
+  participant API as FHIR API
+  participant Audit
+
+  Patient->>Issuer: Verify identity and authorize app
+  Issuer-->>Patient: Show data categories, duration, revocation path
+  Issuer-->>App: Signed Permission Ticket bound to client
+  App->>DH: Token request with client auth and ticket
+  DH->>Issuer: Validate issuer keys and revocation status
+  DH->>DH: Resolve subject and apply local policy
+  DH-->>App: Down-scoped access token or denial
+  App->>API: Request permitted FHIR data
+  API-->>App: Filtered response
+  DH->>Audit: Record ticket validation and token issuance
+  API->>Audit: Record data access
+  Audit-->>Patient: Access log available
+          </pre>
+        </div>
+
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Payer Claim or Prior Authorization Evidence</h4>
+            <span>UC-03</span>
+          </div>
+          <pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant Payer
+  participant Issuer as Workflow / Network Issuer
+  participant ProviderAS as Provider Authorization Server
+  participant Policy as Local Policy Engine
+  participant API as Provider FHIR API
+  participant Audit
+
+  Payer->>Issuer: Request claim-specific evidence authorization
+  Issuer-->>Payer: Ticket with payer identity, claim context, patient, data categories, duration
+  Payer->>ProviderAS: Token request with backend client auth and ticket
+  ProviderAS->>ProviderAS: Verify issuer, signature, audience, client binding
+  ProviderAS->>Policy: Evaluate ticket scope against local rules
+  Policy-->>ProviderAS: Down-scope, exclude self-pay/sensitive data, or deny
+  ProviderAS-->>Payer: Access token limited to approved evidence
+  Payer->>API: Query permitted claim-related data
+  API-->>Payer: Filtered data or partial response
+  ProviderAS->>Audit: Record why payer access was granted
+  API->>Audit: Record exact data accessed
+          </pre>
+        </div>
+
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Public Health Follow-Up Through an Intermediary</h4>
+            <span>UC-04 and UC-07</span>
+          </div>
+          <pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant Provider as Reporting Provider
+  participant PHA as Public Health Agency
+  participant HIE as HIE / HIN Intermediary
+  participant Target as Target Data Holder
+  participant API as Target FHIR API
+  participant Audit
+
+  Provider->>PHA: Initial electronic case report
+  PHA->>HIE: Request condition-specific follow-up access
+  HIE-->>PHA: Ticket or carried ticket with case, condition, purpose, jurisdiction, data profile
+  PHA->>HIE: Query request with ticket
+  HIE->>Target: On-behalf-of token request preserving PHA identity and ticket
+  Target->>Target: Validate issuer, public health authority, client binding, subject
+  Target->>Target: Apply local policy and condition data profile
+  Target-->>HIE: Down-scoped token or denial
+  HIE->>API: Query scoped follow-up data
+  API-->>HIE: Filtered response
+  HIE-->>PHA: Return follow-up data
+  Target->>Audit: Record ticket validation and access
+          </pre>
+        </div>
+      </section>
+
+      <section id="conceptual-model">
+        <div class="section-head">
+          <div>
+            <h3>Conceptual Information Model</h3>
+            <p>The model captures the core classes and relationships needed to reason about the domain before defining concrete profiles or token claims.</p>
+          </div>
+          <span class="tag">Mermaid Class Diagram</span>
+        </div>
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Core Conceptual Classes</h4>
+            <span>Analysis-level class model</span>
+          </div>
+          <pre class="mermaid">
+classDiagram
+  class PermissionTicket {
+    ticketId
+    issuer
+    subject
+    requester
+    purpose
+    scope
+    constraints
+    issuedAt
+    expiresAt
+    revocationReference
+    clientBinding
+  }
+  class Issuer {
+    organizationId
+    issuerType
+    trustFramework
+    publicKeys
+    allowedUseContexts
+  }
+  class AuthorizingParty {
+    authorityType
+    evidence
+    relationshipToSubject
+  }
+  class Requester {
+    clientId
+    appIdentity
+    organizationIdentity
+    userOrSystemRole
+  }
+  class Subject {
+    subjectIdentifier
+    identifierAssurance
+    localPatientReference
+  }
+  class DataHolder {
+    organizationIdentity
+    acceptedIssuers
+    localPolicies
+  }
+  class Scope {
+    dataCategories
+    fhirScopes
+    timeBounds
+    securityLabels
+    securityAttributes
+  }
+  class LocalPolicyOverlay {
+    consentRules
+    jurisdictionalRules
+    sensitiveDataRules
+    customerConfiguration
+  }
+  class AccessToken {
+    tokenId
+    effectiveScopes
+    expiration
+    audience
+  }
+  class AuditEvent {
+    eventType
+    actor
+    ticketId
+    outcome
+    timestamp
+  }
+  class Intermediary {
+    networkId
+    role
+    onBehalfOf
+  }
+
+  Issuer "1" --> "many" PermissionTicket : signs
+  AuthorizingParty "1..many" --> "many" PermissionTicket : provides basis
+  PermissionTicket "1" --> "1..many" Requester : binds to
+  PermissionTicket "1" --> "1..many" Subject : applies to
+  PermissionTicket "1" --> "1" Scope : defines ceiling
+  DataHolder "1" --> "many" LocalPolicyOverlay : applies
+  DataHolder "1" --> "many" Issuer : trusts by context
+  DataHolder "1" --> "many" AccessToken : issues after validation
+  PermissionTicket "1" --> "0..many" AccessToken : constrains
+  Intermediary "0..1" --> "many" PermissionTicket : carries or issues
+  PermissionTicket "1" --> "many" AuditEvent : anchors
+  AccessToken "1" --> "many" AuditEvent : produces
+          </pre>
+        </div>
+      </section>
+
+      <section id="lifecycle">
+        <div class="section-head">
+          <div>
+            <h3>Ticket Lifecycle State Model</h3>
+            <p>The state model separates the durable permission grant from short-lived access tokens and makes rejection, renewal, and revocation explicit.</p>
+          </div>
+          <span class="tag">Mermaid State Diagram</span>
+        </div>
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Permission Ticket Lifecycle</h4>
+            <span>Conceptual state machine</span>
+          </div>
+          <pre class="mermaid">
+stateDiagram-v2
+  [*] --> Draft: authority basis identified
+  Draft --> Issued: issuer signs ticket
+  Draft --> Abandoned: user or workflow stops
+  Issued --> Presented: requester submits ticket
+  Presented --> Rejected: invalid signature, issuer, audience, binding, subject, or revocation
+  Presented --> Validated: ticket is structurally and cryptographically valid
+  Validated --> DownScoped: local policy narrows authorization
+  Validated --> Denied: local policy denies all access
+  DownScoped --> TokenIssued: access token created
+  TokenIssued --> Exercised: requester accesses API
+  Exercised --> Refreshed: grant permits renewal
+  Refreshed --> Presented: new token request
+  Exercised --> Expired: ticket or token reaches time limit
+  Issued --> Revoked: authorizing party or issuer revokes
+  Presented --> Revoked: revocation discovered
+  TokenIssued --> Revoked: active grant revoked
+  Rejected --> Audited
+  Denied --> Audited
+  Exercised --> Audited
+  Expired --> Audited
+  Revoked --> Audited
+  Audited --> [*]
+          </pre>
+        </div>
+      </section>
+
+      <section id="requirements">
+        <div class="section-head">
+          <div>
+            <h3>Requirements Matrix</h3>
+            <p>These grouped requirements are derived from the narrative DAM. They are intentionally written as analysis requirements, not final IG conformance language.</p>
+          </div>
+          <span class="tag">Requirements</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID Range</th>
+                <th>Theme</th>
+                <th>Representative Requirement</th>
+                <th>Primary Sources</th>
+                <th>Downstream Artifact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>R-01..R-06</td>
+                <td>Issuer Trust and Governance</td>
+                <td>A data holder must be able to determine whether the issuer is trusted for the requested use context.</td>
+                <td>EHR vendors, provider organizations, app developers, identity architects, HINs</td>
+                <td>Trust model, issuer registry, conformance tests</td>
+              </tr>
+              <tr>
+                <td>R-07..R-10</td>
+                <td>Requester and Organization Identity</td>
+                <td>The ticket must identify requester, app, organization, and client binding as distinct concepts where applicable.</td>
+                <td>Epic, Optum, public health, HINs, FAST/UDAP stakeholders</td>
+                <td>Actor model, token claim model, security model</td>
+              </tr>
+              <tr>
+                <td>R-11..R-14</td>
+                <td>Subject Resolution</td>
+                <td>Solid identifiers are preferred; demographic matching at enforcement time should be avoided or separated.</td>
+                <td>Health Samurai, EHR vendors, patient access developers</td>
+                <td>Subject matching profile, negative tests</td>
+              </tr>
+              <tr>
+                <td>R-15..R-22</td>
+                <td>Scope and Data Categories</td>
+                <td>The ticket expresses a ceiling; the data holder may down-scope based on local policy and technical capability.</td>
+                <td>Payers, CMS, EHR vendors, public health, consent services</td>
+                <td>Scope vocabulary, data category mappings, policy model</td>
+              </tr>
+              <tr>
+                <td>R-23..R-28</td>
+                <td>Consent, Preferences, and Local Policy</td>
+                <td>The authority basis must be explicit and evaluated alongside local consent, DS4P, jurisdictional, and organizational rules.</td>
+                <td>Oracle, Veradigm, consent management, provider organizations</td>
+                <td>Consent interaction model, rule expression model</td>
+              </tr>
+              <tr>
+                <td>R-29..R-34</td>
+                <td>Duration, Refresh, and Revocation</td>
+                <td>The model must distinguish long-lived grants from short-lived access tokens and support revocation.</td>
+                <td>Patient app developers, referral workflows, public health</td>
+                <td>Lifecycle state machine, revocation protocol</td>
+              </tr>
+              <tr>
+                <td>R-35..R-39</td>
+                <td>Audit and Transparency</td>
+                <td>Ticket issuance, validation, token issuance, access, denial, and revocation must be auditable.</td>
+                <td>Patients, caregivers, Health Samurai, provider organizations</td>
+                <td>Audit event model, patient access log model</td>
+              </tr>
+              <tr>
+                <td>R-40..R-44</td>
+                <td>Discovery and User Experience</td>
+                <td>Apps need machine-readable discovery of accepted issuers and ticket profiles.</td>
+                <td>Apple, patient app developers, caregivers, CMS Blue Button</td>
+                <td>Discovery metadata, permission screen guidance</td>
+              </tr>
+              <tr>
+                <td>R-45..R-49</td>
+                <td>Interoperability Alignment</td>
+                <td>Permission Tickets must align with SMART, FAST Security, UDAP, HL7 Consent, and intermediary patterns.</td>
+                <td>MEDITECH, Oracle, MiHIN, EHR vendors</td>
+                <td>IG alignment matrix, dependency map</td>
+              </tr>
+              <tr>
+                <td>R-50..R-54</td>
+                <td>Implementation Feasibility</td>
+                <td>Reference implementations, tests, and phased adoption are required to avoid shelfware or vendor toll roads.</td>
+                <td>Payers, lean implementers, EHR vendors, HINs</td>
+                <td>Reference architecture, test harness, adoption roadmap</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="traceability">
+        <div class="section-head">
+          <div>
+            <h3>Traceability Model</h3>
+            <p>The traceability diagram shows how interview evidence should flow into formal artifacts and eventually into specification and conformance work.</p>
+          </div>
+          <span class="tag">Mermaid Flowchart</span>
+        </div>
+        <div class="diagram">
+          <div class="diagram-title">
+            <h4>Evidence to Specification Trace</h4>
+            <span>Recommended artifact pipeline</span>
+          </div>
+          <pre class="mermaid">
+flowchart TB
+  I[Stakeholder Interviews] --> T[Repeated Themes and Tensions]
+  T --> N[Narrative DAM]
+  N --> U[Use Case Catalog]
+  N --> A[Actor and Concept Model]
+  N --> R[Requirements Matrix]
+  U --> S[Storyboards and Sequences]
+  A --> C[Class and Information Model]
+  R --> P[Policy and Trust Model]
+  R --> V[Verification Criteria]
+  S --> IG[Implementation Guide Work]
+  C --> IG
+  P --> IG
+  V --> TEST[Conformance Tests]
+  IG --> TEST
+  TEST --> PILOT[Pilots and Feedback]
+  PILOT --> T
+
+  classDef evidence fill:#e5f3f1,stroke:#0f766e,color:#16202a
+  classDef model fill:#e8efff,stroke:#1d4ed8,color:#16202a
+  classDef spec fill:#fff4dd,stroke:#b45309,color:#16202a
+  classDef test fill:#ffe8ee,stroke:#be123c,color:#16202a
+  class I,T,N evidence
+  class U,A,R,S,C,P model
+  class IG spec
+  class V,TEST,PILOT test
+          </pre>
+        </div>
+      </section>
+
+      <section id="risk">
+        <div class="section-head">
+          <div>
+            <h3>Risk and Mitigation Matrix</h3>
+            <p>The DAM risk model captures the failure modes most likely to undermine adoption, safety, or trust.</p>
+          </div>
+          <span class="tag">Risk Artifact</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Risk</th>
+                <th>Impact</th>
+                <th>Mitigation</th>
+                <th>Residual Open Question</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Over-provisioning</td>
+                <td>Unauthorized or excessive disclosure.</td>
+                <td>Ticket is ceiling; data holder down-scopes; conformance tests verify enforcement.</td>
+                <td>How much policy language belongs in the ticket versus local configuration?</td>
+              </tr>
+              <tr>
+                <td>Under-provisioning</td>
+                <td>Legitimate care, public health, or registry work is blocked.</td>
+                <td>Support renewal, follow-up tickets, partial denial reasons, and use-case profiles.</td>
+                <td>Who defines condition-specific and workflow-specific scope profiles?</td>
+              </tr>
+              <tr>
+                <td>Wrong-patient match</td>
+                <td>High-severity privacy and safety failure.</td>
+                <td>Prefer solid identifiers; separate demographic matching; deny ambiguity.</td>
+                <td>What minimum identifier assurance is acceptable for each use case?</td>
+              </tr>
+              <tr>
+                <td>Issuer misuse</td>
+                <td>Trust framework collapse or broad unauthorized access.</td>
+                <td>Use-case-specific issuer accreditation, audit, suspension, and revocation.</td>
+                <td>Which entity governs issuer accreditation?</td>
+              </tr>
+              <tr>
+                <td>Category surprise</td>
+                <td>Practices lose control over approved requester categories.</td>
+                <td>Notify, lock membership, or require reapproval for material changes.</td>
+                <td>What counts as a material category change?</td>
+              </tr>
+              <tr>
+                <td>Sensitive data leakage</td>
+                <td>Behavioral health, 42 CFR Part 2, sexual health, or self-pay data disclosed improperly.</td>
+                <td>Keep local filters authoritative; align with DS4P; avoid unsupported fine-grain claims.</td>
+                <td>What segmentation level can EHRs reliably support in v1?</td>
+              </tr>
+              <tr>
+                <td>Post-release misuse</td>
+                <td>Ticket controls access but not downstream behavior.</td>
+                <td>Preserve purpose, recipient, audit, provenance, and legal agreements.</td>
+                <td>Should later work explore object-capability or data-use controls?</td>
+              </tr>
+              <tr>
+                <td>Implementation burden</td>
+                <td>Spec validates but does not get adopted or enforced consistently.</td>
+                <td>Reference implementation, test suite, phased profiles, and open deployment path.</td>
+                <td>What minimum viable deployment package is needed?</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="decisions">
+        <div class="section-head">
+          <div>
+            <h3>Open Decisions and Formal Artifact Backlog</h3>
+            <p>These decisions should be resolved or explicitly deferred before converting the DAM into an implementation guide.</p>
+          </div>
+          <span class="tag">Next Phase</span>
+        </div>
+        <div class="grid two">
+          <div class="artifact-card">
+            <strong>Open Decisions</strong>
+            <ul>
+              <li>Generic extensible ticket structure, use-case profiles, or both?</li>
+              <li>Minimum acceptable subject identifier assurance by use case?</li>
+              <li>Discovery mechanism for accepted issuers and ticket profiles?</li>
+              <li>Patient-meaningful data category vocabulary and FHIR mappings?</li>
+              <li>Relationship to HL7 Consent, Scalable Consent Management, DS4P, FAST, and UDAP?</li>
+              <li>Issuer registry and DNS/domain-bound key trust pattern?</li>
+              <li>Rules for intermediaries as issuers versus carriers?</li>
+              <li>Write-back boundaries for v1?</li>
+            </ul>
+          </div>
+          <div class="artifact-card">
+            <strong>Formal Artifacts to Generate Next</strong>
+            <ul>
+              <li>Use case storyboards with preconditions and postconditions</li>
+              <li>Full actor-role matrix and trust responsibility model</li>
+              <li>Detailed conceptual data dictionary</li>
+              <li>Subject resolution model and negative test cases</li>
+              <li>Scope vocabulary model and data category mappings</li>
+              <li>Consent and local policy interaction model</li>
+              <li>Audit event profile and patient transparency model</li>
+              <li>Implementation guide outline and conformance scenario catalog</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note warning">
+          <strong>Recommended v1 stance:</strong> build a common core ticket model with profile-specific extensions; treat the ticket as an authorization ceiling; include intermediary flows; preserve local policy; avoid unsupported fine-grained segmentation; and provide reference tooling early.
+        </div>
+      </section>
+
+      <p class="footer">
+        This standalone DAM HTML uses Mermaid for diagrams. If diagrams do not render, check browser network access to the Mermaid CDN or inspect the embedded Mermaid source in each diagram block.
+      </p>
+    </main>
+  </div>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: "loose",
+      theme: "base",
+      themeVariables: {
+        fontFamily: "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+        primaryColor: "#e5f3f1",
+        primaryTextColor: "#16202a",
+        primaryBorderColor: "#0f766e",
+        lineColor: "#657482",
+        secondaryColor: "#e8efff",
+        tertiaryColor: "#fff4dd",
+        background: "#ffffff",
+        mainBkg: "#ffffff",
+        nodeBorder: "#95a3b2",
+        clusterBkg: "#fbfcfd",
+        clusterBorder: "#d9e0e7",
+        edgeLabelBackground: "#ffffff"
+      },
+      flowchart: {
+        curve: "basis",
+        htmlLabels: true,
+        nodeSpacing: 48,
+        rankSpacing: 56
+      },
+      sequence: {
+        mirrorActors: false,
+        showSequenceNumbers: true,
+        actorMargin: 70,
+        messageMargin: 48
+      },
+      mindmap: {
+        useMaxWidth: true
+      }
+    });
+  </script>
+</body>
+</html>

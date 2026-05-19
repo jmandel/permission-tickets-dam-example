@@ -1,0 +1,106 @@
+name: Build DAM site
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Validate and package DAM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate DAM artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f dam.md
+          test -f dam.html
+
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          html = Path("dam.html").read_text(encoding="utf-8")
+          markdown = Path("dam.md").read_text(encoding="utf-8")
+
+          class TitleParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_title = False
+                  self.title = []
+
+              def handle_starttag(self, tag, attrs):
+                  if tag == "title":
+                      self.in_title = True
+
+              def handle_endtag(self, tag):
+                  if tag == "title":
+                      self.in_title = False
+
+              def handle_data(self, data):
+                  if self.in_title:
+                      self.title.append(data)
+
+          parser = TitleParser()
+          parser.feed(html)
+          title = "".join(parser.title).strip()
+
+          assert "SMART Permission Tickets" in title, title
+          assert "SMART Permission Tickets" in html
+          assert "Narrative Domain Analysis Model" in markdown
+          assert "https://cdn.jsdelivr.net/npm/mermaid" in html
+
+          mermaid_count = html.count('class="mermaid"')
+          assert mermaid_count >= 8, mermaid_count
+          PY
+
+      - name: Build static site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cp dam.html dist/index.html
+          cp dam.md dist/dam.md
+          touch dist/.nojekyll
+
+      - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy DAM site
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
