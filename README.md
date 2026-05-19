@@ -3,6 +3,9 @@
 This repository contains a working Domain Analysis Model (DAM) example for
 SMART Permission Tickets, based on stakeholder interview synthesis.
 
+Rendered site:
+https://joshuamandel.com/permission-tickets-dam-example/
+
 ## Contents
 
 - `dam.md` - narrative DAM source document
